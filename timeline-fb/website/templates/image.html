@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Typography Effects with CSS3 and jQuery</title>
+        <link rel="stylesheet" type="text/css" href="/s/make_image/css/demo.css" />
+        <link rel="stylesheet" type="text/css" href="/s/make_image/css/style4.css" />
+        <link href='http://fonts.googleapis.com/css?family=Aldrich|Prociono' rel='stylesheet' type='text/css' />
+        <script type="text/javascript" src="/s/make_image/js/modernizr.custom.40443.js"></script>
+    </head>
+    <body style="background: url('/s/make_image/images/background-timeline.png')">
+
+        <div class="container">
+          <div id="letter-container" class="letter-container">
+            <h2>
+              <a id="t" href="#" style="color:#f6bd49"></a>
+            </h2>
+            <h2>
+              <a id="loc" href="#"></a>
+            </h2>
+            <h2>
+              <a id="dist" href="#" style="color:#32cccc"></a>
+            </h2>
+          </div>
+          <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+          <script type="text/javascript" src="/s/make_image/js/jquery.lettering.js"></script>
+	  
+	  <script type="text/javascript">
+	    
+	    function getParameterByName(name)
+	    {
+	    name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
+	    var regexS = "[\\?&]" + name + "=([^&#]*)";
+	    var regex = new RegExp(regexS);
+	    var results = regex.exec(window.location.search);
+	    if(results == null)
+	    return "";
+	    else
+	    return decodeURIComponent(results[1].replace(/\+/g, " "));
+	    }
+	    
+	    $(function() {
+		a = getParameterByName("a");
+		d = getParameterByName("d");
+		dist = getParameterByName("dist");
+		t = getParameterByName("t");
+
+	    $("#t").append("~"+t+"KM");
+	    $("#loc").append(d+"-"+a);
+	    $("#dist").append("+"+dist+"KM");
+	
+	    });
+
+	  </script>
+          <script type="text/javascript">
+            $(function() {
+
+            var $word           = $("#letter-container h2 a"),
+            lettering   = $word.lettering();
+
+            var extensionPlugin         = {
+            wrapper     : function() {
+            var $w      = this;
+            $w.children('span').each( function(i) {
+                                                                var $el = $(this),
+            t   = $el.text();
+
+            if( t !== ' ' ) {
+            var $newStruc = $('<div class="twrap"><div class="tbg"><span>' + t + '</span></div><div class="tup"><div class="tfront"><span>' + t + '</span></div><div class="tback"><span>' + t + '</span></div></div><div class="tdown"><spa\
+n>' + t + '</span></div></div>');
+
+            $newStruc.insertAfter( $el );
+            $el.remove();
+            }
+
+            });
+            }
+            };
+            $.extend( true, lettering, extensionPlugin );
+            lettering.wrapper();
+
+            });
+          </script>
+        </div>
+    </body>
+</html>

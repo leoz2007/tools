@@ -1,0 +1,230 @@
+// Variables.less
+// Variables to customize the look and feel of Bootstrap
+// Swatch: Cerulean
+// Version: 2.0.3
+// -----------------------------------------------------
+
+// GLOBAL VALUES
+// --------------------------------------------------
+
+
+// Grays
+// -------------------------
+@black:                 #000;
+@grayDarker:            #222;
+@grayDark:              #333;
+@gray:                  #555;
+@grayLight:             #999;
+@grayLighter:           #F4F4F4;
+@grayLessLight:         #E6E6E6;
+@white:                 #fff;
+@grayHr:                #CACACA;
+
+
+// Accent colors
+// -------------------------
+@blue:                  #3E78B3;
+@blueDark:              #033C73;
+@green:                 #45bb00;
+@red:                   #C71C22;
+@yellow:                #F7B42C;
+@orange:                #DD5600;
+@pink:                  #F49AC1;
+@purple:                #9760B3;
+@jiBlue:		#0ba4dc;
+@carryColor:		rgba(247, 180, 44, 0.85);
+@sendColor:		rgba(11, 164, 220, 0.85);
+
+// Scaffolding
+// -------------------------
+@bodyBackground:        @white;
+@textColor:             @gray;
+
+
+// Links
+// -------------------------
+@linkColor:             #369BD7;
+@linkColorHover:        darken(@linkColor, 15%);
+
+
+// Typography
+// -------------------------
+@font-face {
+    font-family: Myriad;
+    src: url("../fonts/MYRIADPRO-REGULAR.OTF");
+}
+
+@font-face {
+    font-family: Myriad;
+    font-weight: bold;
+    src: url("../fonts/MYRIADPRO-SEMIBOLD.OTF");
+}
+
+@sansFontFamily:        "Helvetica Neue", Helvetica, Arial, sans-serif;
+@serifFontFamily:       Georgia, "Times New Roman", Times, serif;
+@monoFontFamily:        Menlo, Monaco, Consolas, "Courier New", monospace;
+
+@baseFontSize:          13px;
+@baseFontFamily:        @sansFontFamily;
+@baseLineHeight:        18px;
+@altFontFamily:         @monoFontFamily;
+
+/*@headingsFontFamily:    'myriad', 'telex', sans-serif; // empty to use BS default, @baseFontFamily*/
+@headingsFontWeight:    bold;    // instead of browser default, bold
+@headingsColor:         #317EAC; // empty to use BS default, @textColor
+@brandFontFamily:        'myriad', sans-serif;
+
+
+// Tables
+// -------------------------
+@tableBackground:                   transparent; // overall background-color
+@tableBackgroundAccent:             #f9f9f9; // for striping
+@tableBackgroundHover:              #f5f5f5; // for hover
+@tableBorder:                       #ddd; // table and cell border
+
+
+// Buttons
+// -------------------------
+@btnBackground:                     @white;
+@btnBackgroundHighlight:            darken(@white, 10%);
+@btnBorder:                         darken(@white, 20%);
+
+@btnPrimaryBackground:              @jiBlue;
+@btnPrimaryBackgroundHighlight:     spin(@btnPrimaryBackground, 15%);
+
+@btnInfoBackground:                 @purple;
+@btnInfoBackgroundHighlight:        #2f96b4;
+
+@btnSuccessBackground:              darken(@green, 5%);
+@btnSuccessBackgroundHighlight:     #51a351;
+
+@btnWarningBackground:              @orange;
+@btnWarningBackgroundHighlight:     @orange;
+
+@btnDangerBackground:               @red;
+@btnDangerBackgroundHighlight:      #bd362f;
+
+@btnInverseBackground:              @yellow;
+@btnInverseBackgroundHighlight:     @grayDarker;
+
+@btnDefaultBackground:              @linkColor;
+@btnDefaultBackgroundHighlight:     @yellow;
+
+
+// Forms
+// -------------------------
+@inputBackground:               @white;
+@inputBorder:                   #ccc;
+@inputBorderRadius:             3px;
+@inputDisabledBackground:       @grayLighter;
+@formActionsBackground:         #f5f5f5;
+
+// Dropdowns
+// -------------------------
+@dropdownBackground:            @white;
+@dropdownBorder:                rgba(0,0,0,.2);
+@dropdownLinkColor:             @grayDark;
+@dropdownLinkColorHover:        @white;
+@dropdownLinkBackgroundHover:   @linkColor;
+
+
+
+
+// COMPONENT VARIABLES
+// --------------------------------------------------
+
+// Z-index master list
+// -------------------------
+// Used for a bird's eye view of components dependent on the z-axis
+// Try to avoid customizing these :)
+@zindexDropdown:          1000;
+@zindexPopover:           1010;
+@zindexTooltip:           1020;
+@zindexFixedNavbar:       1030;
+@zindexModalBackdrop:     1040;
+@zindexModal:             1050;
+@zindexPacContainer:      2000;
+
+
+// Sprite icons path
+// -------------------------
+@iconSpritePath:          "../img/glyphicons-halflings.png";
+@iconWhiteSpritePath:     "../img/glyphicons-halflings-white.png";
+
+
+// Input placeholder text color
+// -------------------------
+@placeholderText:         @grayLight;
+
+
+// Hr border color
+// -------------------------
+@hrBorder:                @grayLighter;
+
+
+// Navbar
+// -------------------------
+@navbarHeight:                    40px;
+@navbarBackground:                @linkColor;
+@navbarBackgroundHighlight:       lighten(@linkColor, 10%);
+
+@navbarText:                      @grayLighter;
+@navbarLinkColor:                 @grayLighter;
+@navbarLinkColorHover:            lighten(@yellow, 20%);
+@navbarLinkColorActive:           @navbarLinkColorHover;
+@navbarLinkBackgroundHover:       transparent;
+@navbarLinkBackgroundActive:      rgba(0,0,0,.2);
+
+@navbarSearchBackground:          lighten(@navbarBackground, 25%);
+@navbarSearchBackgroundFocus:     @white;
+@navbarSearchBorder:              darken(@navbarSearchBackground, 30%);
+@navbarSearchPlaceholderColor:    @white;
+/*@navbarBrandColor:                darken(@navbarBackground, 17%);*/
+@navbarBrandColor:                @white;
+@navbarBrandShadowColor:          #393939;
+
+
+// Hero unit
+// -------------------------
+@heroUnitBackground:              @grayLighter;
+@heroUnitHeadingColor:            inherit;
+@heroUnitLeadColor:               inherit;
+
+
+// Form states and alerts
+// -------------------------
+@warningText:             darken(@linkColor, 20%);
+@warningBackground:       lighten(@linkColor, 20%);
+@warningBorder:           darken(spin(@warningBackground, -10), 3%);
+
+@errorText:               darken(#C45559, 5%);
+@errorBackground:         #EDDBE3;
+@errorBorder:             darken(spin(@errorBackground, -10), 3%);
+
+@successText:             darken(@green, 5%);
+@successBackground:       #CDB;
+@successBorder:           darken(spin(@successBackground, -10), 5%);
+
+@infoText:                darken(#908A62, 5%);
+@infoBackground:          #EDEBE1;
+@infoBorder:              darken(spin(@infoBackground, -10), 7%);
+
+
+
+// GRID
+// --------------------------------------------------
+
+// Default 940px grid
+// -------------------------
+@gridColumns:             12;
+@gridColumnWidth:         60px;
+@gridGutterWidth:         20px;
+@gridRowWidth:            (@gridColumns * @gridColumnWidth) + (@gridGutterWidth * (@gridColumns - 1));
+
+// Fluid grid
+// -------------------------
+@fluidGridColumnWidth:    6.382978723%;
+@fluidGridGutterWidth:    2.127659574%;
+
+
+@carryColor 

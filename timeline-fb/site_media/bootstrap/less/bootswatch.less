@@ -1,0 +1,408 @@
+// Bootswatch.less
+// Swatch: Cerulean
+// Version: 2.0.3
+// -----------------------------------------------------
+
+// IMPORTS
+// -----------------------------------------------------
+
+@import url(https://fonts.googleapis.com/css?family=Telex);
+@import "Variables.less";
+
+// NAVBAR
+// -----------------------------------------------------
+
+.navbar {
+
+    font-family: @headingsFontFamily;
+
+    .navbar-inner {
+        #gradient > .vertical-three-colors(@navbarBackground, @navbarBackground, 90%, @navbarBackgroundHighlight);
+        box-shadow: 0 3px 6px rgba(0, 0, 0, .30), inset 0 -1px 0 rgba(0, 0, 0, .1);
+    }
+
+    .nav li.dropdown.active > .dropdown-toggle,
+        .nav li.dropdown.active.open > .dropdown-toggle {
+            background-color: @navbarLinkBackgroundActive;
+        }
+
+    .search-query {
+border: 1px solid darken(@linkColor, 10%);
+    }
+
+    .nav-collapse.in > .nav > li .dropdown-menu a {
+color: @white;
+
+       &:hover {
+color: @white;
+       }
+    }
+
+    .nav-collapse.in .nav li > a {
+color: @white;
+
+       &:hover {
+           background-color: #2B7CAC;
+       }
+    }
+
+    .btn-navbar:hover {
+        background-color: darken(@white, 20%);
+    }
+}
+
+div.subnav {
+    font-family: @headingsFontFamily;
+}
+
+// BUTTONS
+// -----------------------------------------------------
+
+/*.btn {*/
+/*#gradient > .vertical-three-colors(@grayLighter, @grayLighter, 5%, darken(@grayLighter, 0%));*/
+/*    @shadow: inset 0 1px 0 rgba(255,255,255,.2), 0 1px 2px rgba(0,0,0,.05);*/
+/*    .box-shadow(@shadow);*/
+/**/
+/*    &:hover {*/
+/*        background-position: 0 0;*/
+/*    }*/
+/*}*/
+
+.btn-primary {
+    .buttonBackground(lighten(@btnPrimaryBackground, 5%), @btnPrimaryBackground);
+}
+
+.btn-info {
+    .buttonBackground(lighten(@btnInfoBackground, 5%), @btnInfoBackground);
+}
+
+.btn-success {
+    .buttonBackground(lighten(@btnSuccessBackground, 5%), @btnSuccessBackground);
+}
+
+.btn-warning {
+    .buttonBackground(lighten(@btnWarningBackground, 5%), @btnWarningBackground);
+}
+
+.btn-danger {
+    .buttonBackground(lighten(@btnDangerBackground, 5%), @btnDangerBackground);
+}
+
+.btn-inverse {
+    .buttonBackground(lighten(@btnInverseBackground, 5%), @btnInverseBackground);
+}
+
+.btn-default {
+    .buttonBackground(lighten(@btnDefaultBackground, 3%), @btnDefaultBackground);
+}
+
+// ICONS
+// -----------------------------------------------------
+
+// Make icons gray
+i[class^="icon-"]{
+opacity: 0.8;
+}
+
+
+// Base layouts
+.well{
+        background: -moz-linear-gradient(top, white 0%, #DFDFDF 100%);
+        background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,white), color-stop(100%,#DFDFDF));
+        background: -webkit-linear-gradient(top, white 0%,#DFDFDF 100%);
+        background: -o-linear-gradient(top, white 0%,#DFDFDF 100%);
+        background: -ms-linear-gradient(top, white 0%,#DFDFDF 100%);
+        background: linear-gradient(top, white 0%,#DFDFDF 100%);
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#dfdfdf',GradientType=0 );
+        border: 1px solid #EEE;
+        border: 1px solid rgba(0, 0, 0, 0.05);
+        -webkit-border-radius: 10px;
+        -moz-border-radius: 10px;
+        border-radius: 10px;
+        -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.6);
+        -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.6);
+        box-shadow: 0 2px 2px rgba(0, 0, 0, 0.4);
+}
+
+.well h2 {
+    margin-bottom: 15px;
+}
+
+.breadcrumb {
+background: #f5f5f5; /* Old browsers */
+background: -moz-linear-gradient(top,  #f5f5f5 0%, #f4f4f4 23%, #e6e6e6 100%); /* FF3.6+ */
+
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#f5f5f5), color-stop(23%,#f4f4f4), color-stop(100%,#e6e6e6)); /* Chrome,Safari4+ */
+
+background: -webkit-linear-gradient(top,  #f5f5f5 0%,#f4f4f4 23%,#e6e6e6 100%); /* Chrome10+,Safari5.1+ */
+
+background: -o-linear-gradient(top,  whiteSmoke 0%,#F4F4F4 23%,#E6E6E6 100%); /* Opera 11.10+ */
+background: -ms-linear-gradient(top,  #f5f5f5 0%,#f4f4f4 23%,#e6e6e6 100%); /* IE10+ */
+background: linear-gradient(top,  #f5f5f5 0%,#f4f4f4 23%,#e6e6e6 100%); /* W3C */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f5f5f5', endColorstr='#e6e6e6',GradientType=0 ); /* IE6-9 */
+
+
+border: 1px solid #bdbdbd;
+        -webkit-border-radius: 10px;
+        -moz-border-radius: 10px;
+        border-radius: 10px;
+        -webkit-box-shadow:0 2px 3px #a8a8a8, inset 0 -1px 0 #ffffff;
+        -moz-box-shadow:0 2px 3px #a8a8a8, inset 0 -1px 0 #ffffff;
+}
+
+
+hr {
+    border-top:1px solid @grayHr !important;
+}
+///////////////////////////////
+// HOME PAGE
+//////////////////////////////
+
+#home_form h2 {
+    font-size: 24px;
+    line-height: 36px;
+    color: @grayLight;
+}
+
+#home_form a p{
+    color:          @linkColor;
+    font-weight:    bold;
+    text-shadow:    0 -1px 0 rgba(255, 255, 255, 0.25);
+}
+
+#send_button:hover p{
+    color:          @grayDark;
+}
+
+#carry_button:hover p{
+    color:          @grayDark;
+}
+
+#send_button:hover {
+    .btn-default;
+}
+
+#carry_button:hover {
+    .btn-inverse;
+}
+
+body {
+    background-image: url('../img/bg2.png');
+    background-repeat: repeat;
+}
+
+.input-jibli {
+    height: 40px !important;
+    color: lighten(@blue, 20%) !important;
+    font-weight: 600 !important;
+    font-size: 18px !important;
+}
+
+.input-jibli::-webkit-input-placeholder, .input-jibli:moz-placeholder {
+    font-weight: 700;
+    font-size: 18px;
+    color: lighten(@gray, 40%);
+}
+
+.pac-container {
+    z-index: @zindexPacContainer !important;
+}
+
+.pac-item {
+    font-size: 18px;
+    color: lighten(@blue, 20%);
+}
+.pac-item:hover{
+    background: lighten(@blue, 45%);
+    font-weight: bold;
+}
+
+/////////////////////
+/// Announce results 
+/////////////////////
+
+.date-text {
+    padding-top: 8px;
+}
+
+/*.announce-weight, .date-text, .price, .price-text {*/
+/*    color: @jiBlue;*/
+/*}*/
+
+/*.announce-weight .weight, */
+/*.announce-weight .weight_max, */
+/*.date-text,*/
+/*.price,*/
+/*.from_location , .to_location{*/
+/*    background-color: lighten(@blue, 40%);*/
+/*    border-radius: 7px;*/
+/*}*/
+
+
+/// ///
+// Modals 
+/////
+
+// A little bit bigger modals
+
+.modal {
+    top: 42%;
+}
+
+.modal-body {
+    max-height: 500px;
+}
+
+
+////////////////////////
+/// Transaction status 
+///////////////////////
+
+.status {
+    padding:6px 9px 2px;
+    -webkit-border-radius: 9px;
+    -moz-border-radius: 9px;
+    line-height: 14px;
+    vertical-align: baseline;
+    white-space: nowrap;
+    text-shadow: 0 1px 1px rgba(255, 255, 255, 0.4);
+    margin-left:    30px;
+}
+
+.status-default {
+    color:  @grayLight;
+    font-weight:    600px;
+}
+
+.status-inverse {
+    color:  @yellow;
+    font-weight:    bold;
+    text-shadow: 0 1px 1px rgba(255, 255, 255, 0.4);
+}
+
+.status-warning {
+    color:  @orange;
+    font-weight:    bold;
+    text-shadow: 0 1px 1px rgba(255, 255, 255, 0.4);
+}
+
+.status-important {
+    color:  @red;
+    font-weight:    bold;
+    text-shadow: 0 1px 1px rgba(255, 255, 255, 0.4);
+}
+
+.status-success {
+    color:      @green;
+    font-weight: bold;
+    text-shadow: 0 1px 1px rgba(255, 255, 255, 0.4);
+}
+
+.status-primary {
+    color:      @jiBlue;
+    font-weight: bold;
+    text-shadow: 0 1px 1px rgba(255, 255, 255, 0.4);
+}
+
+.transaction_status {
+    padding: 10px 0 0;
+    border:     1px dashed rgba(160, 160, 160, .5);
+    min-height:     152px !important;
+    border-radius:  10px;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+}
+
+.status .led {
+    width: 6px;
+    height: 6px;
+    margin-bottom: 1.5px;
+    margin-right: 10px;
+    margin-left: -16.5px;
+    border-radius: 50px;
+    display: inline-block;
+}
+
+.status-success .led {
+    background: #45bb00;
+    box-shadow: inset 0 2px 4px rgba(200, 253, 200, 0.8), 1px 1px 5px rgba(69, 187, 0, 0.5), -1px -1px 5px rgba(69, 187, 0, 0.5), 1px -1px 5px rgba(69, 187, 0, 0.5), -1px 1px 5px rgba(69, 187, 0, 0.5);
+}
+
+.status-default .led {
+    background: rgba(185, 185, 185, 0.82);
+    box-shadow: inset 0 2px 4px rgba(241, 241, 241, 0.8), 1px 1px 5px rgba(156, 156, 156, 0.26), -1px -1px 5px rgba(156, 156, 156, 0.26), 1px -1px 5px rgba(156, 156, 156, 0.26), -1px 1px 5px rgba(65, 65, 65, 0.26);
+}
+
+.status-inverse .led {
+    background: rgba(255, 173, 0, 0.82);
+    box-shadow: inset 0 2px 4px rgba(255, 249, 231, 0.8), 1px 1px 4px rgba(233, 210, 87, 0.79), -1px -1px 4px rgba(233, 210, 87, 0.79), 1px -1px 4px rgba(233, 210, 87, 0.79), -1px 1px 4px rgba(233, 210, 87, 0.79);
+}
+
+.status-warning .led {
+    background: rgba(255, 82, 0, 0.8);
+    box-shadow: inset 0 2px 4px rgba(255, 249, 231, 0.8), 1px 1px 5px rgba(233, 145, 87, 0.39), -1px -1px 5px rgba(233, 145, 87, 0.39), 1px -1px 5px rgba(233, 145, 87, 0.39), -1px 1px 5px rgba(233, 145, 87, 0.39);
+}
+
+.status-primary .led {
+    background: rgba(11, 164, 220, 0.8);
+    box-shadow: inset 0 2px 4px rgba(255, 249, 231, 0.8), 1px 1px 6px rgba(11, 164, 220, 0.39), -1px -1px 6px rgba(11, 164, 220, 0.39), 1px -1px 6px rgba(11, 164, 220, 0.39), -1px 1px 6px rgba(11, 164, 220, 0.39);
+}
+
+.status-important .led {
+    background: rgba(255, 0, 0, 0.8);
+    box-shadow: inset 0 2px 4px rgba(255, 249, 231, 0.8), 1px 1px 5px rgba(233, 87, 87, 0.39), -1px -1px 5px rgba(233, 87, 87, 0.39), 1px -1px 5px rgba(233, 87, 87, 0.39), -1px 1px 5px rgba(233, 87, 87, 0.39);
+}
+
+//////////
+// Helper functions
+//////////
+
+.colorize_background(@color: @white, @alpha: 1) {
+    border-color: hsla(hue(@color), saturation(@color), lightness(@color), @alpha);
+}
+
+/// ///
+// User Profil
+//////
+
+.colorize_border(@color: @white, @alpha: 1) {
+   border-color: hsla(hue(@color), saturation(@color), lightness(@color), @alpha);
+}
+
+.profil_image {
+  box-shadow: 0px 0px 6px rgba(0, 0, 0, .6);
+  -webkit-box-shadow: 0px 0px 6px rgba(0, 0, 0, .6);
+  -moz-box-shadow: 0px 0px 6px rgba(0, 0, 0, .6);
+}
+
+////////
+// Brand
+///////
+
+/*a .brand {*/
+/*    font-family: @brandFontFamily;*/
+/*}*/
+
+
+///////
+// Pin effects
+//////
+
+.left_pin {
+    border-radius: 50px;
+}
+
+.left_pin.send{
+    background-color: @sendColor;
+}
+
+.left_pin.carry{
+    background-color: @carryColor;
+}
+
+.send .one-announce{
+	border:1px solid @sendColor;
+}
+.carry .one-announce{
+	border:1px solid @carryColor;
+}

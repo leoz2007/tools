@@ -1,0 +1,67 @@
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Timeline Facebook</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Script for make timeline on Facebook">
+    <meta name="author" content="Leoz - ThinkIT">
+
+    <link href="/s/bootstrap/css/bootstrap.css" rel="stylesheet">
+    <link href="/s/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
+    <link href="/s/css/style4.css" rel="stylesheet">
+    <link href="/s/css/travel.css" rel="stylesheet">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+    <script src="/s/bootstrap/js/bootstrap.js"></script>
+    <script type="text/javascript"
+            src="https://maps.googleapis.com/maps/api/js?sensor=false&libraries=geometry"></script>
+    <script type="text/javascript" src="/s/js/travels.js"></script>
+  </head>
+
+  <body>
+    <div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="#">Timeline Facebook</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="row">
+        <input class="input departure" type="text" name="departure" placeholder="Departure"/>
+        <input class="input arrival" type="text" name="arrival" placeholder="Arrival"/>
+        <button>add</button>
+
+        <div id="result"></div>
+
+        <table class="table table-stripped table-bordered table-condensed" style="background-color:#FFF">
+          <thead>
+            <tr>
+              <th>Ville de depart</th>
+              <th>Ville d'arrive</th>
+              <th>Distance</th>
+              <th>Screenshot</th>
+            </tr>
+          </thead>
+          <tbody class="result">
+          </tbody>
+        </table>
+
+	<div class="row">
+          <div class="total span3 offset3">
+          </div>
+          <div class="totalmiles span3 offset3">
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </body>
+</html>
