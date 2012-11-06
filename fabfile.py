@@ -15,7 +15,7 @@ Fabfile for fb-timeline project
 '''
 
 APP_ROOT = "/opt/cover/"
-SUPERVISOR_APP = "fb-cover"
+SUPERVISOR_APP = "cover"
 env.hosts = ["redmine"]
 env.use_ssh_config = True
 
@@ -146,6 +146,7 @@ def add_ip():
 
 def _activate_deploy_mode():
     sed(os.path.join(DJANGO_FOLDER, 'settings.py'), 'DEPLOY_MODE = False', 'DEPLOY_MODE = True')
+    sed(os.path.join(DJANGO_FOLDER, 'settings.py'), 'DEBUG = True', 'DEBUG = False')
 
 
 def _start_app():
