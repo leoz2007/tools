@@ -10,7 +10,6 @@ from django.contrib.messages.api import get_messages
 from django.shortcuts import render_to_response, redirect
 from django.template.loader_tags import BlockNode, ExtendsNode
 from django.template import loader, Context, RequestContext, TextNode
-from django.utils import simplejson
 from django.conf import settings
 import ipdb
 import logging, json, time, os

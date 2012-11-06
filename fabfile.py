@@ -5,17 +5,19 @@ from fabric.contrib.files import exists, sed
 from fabric.contrib.project import rsync_project
 from fabric.context_managers import cd, settings, hide
 from fabric.operations import put
-import re
+import re, getpass
 import os, sys
 import ConfigParser
-import time
+import time, datetime, socket
 
-APPSFOLDER="/opt/djangoapps/"
-WSGI_SUPERCONF = os.path.join(APPSFOLDER, 'django_base')
-SUBSCRIPTION_FILE = APPSFOLDER + 'domains.txt'
+'''
+Fabfile for fb-timeline project
+'''
+
+APP_ROOT = "/opt/cover/"
+SUPERVISOR_APP = "fb-cover"
+env.hosts = ["redmine"]
 env.use_ssh_config = True
-CELERY_CONF_FILE = 'celery.conf'
-env.hosts = ["jibli_dev"]
 
 
 ### GET GLOBAL REPO CONFIG
@@ -24,7 +26,7 @@ with settings(
         ):
     GITURL = local("git config remote.origin.url", capture=True)
     if GITURL.failed:
-        abort("Error: Unable to get the git REPOsitory. Are you running the script from a git project?")
+        abort("Error: Unable to get the git repository. Are you running the script from a git project?")
     GITURL = re.sub(r'^.+:', 'git@github.com:', GITURL)
     REPO = GITURL.split(":")[1].split("/")[1].split(".")[0]
     BRANCH = local("git branch", capture=True)
@@ -38,40 +40,37 @@ with settings(
     if BRANCH == "(no BRANCH)":
         abort("You must be on a valid BRANCH to run the script.")
 
-    APPFOLDER = os.path.join(APPSFOLDER, '%s-%s' % (REPO, BRANCH))
-    DJANGO_FOLDER = os.path.join(APPFOLDER, 'app')
-    APP_VENV = os.path.join(APPFOLDER, 'virt')
-    CELERY_DIR = DJANGO_FOLDER
+    DJANGO_FOLDER = os.path.join(APP_ROOT, 'app')
+    APP_VENV = os.path.join(APP_ROOT, 'virt')
 
 
-def dev():
-    '''Run commands on dev server'''
-    env.hosts = ["jibli_dev"]
+#def redmine():
+#    '''Run commands on redmine server'''
 
-def qm():
-    '''quick_merge'''
-    quick_merge()
+#    env.hosts = ["redmine"]
+    
+#def qm():
+#    '''quick_merge'''
+#    quick_merge()
 
-def quick_merge(force="n", verbose="f"):
-    '''Runs git pull --rebase and merge with dev'''
-    if confirm('Make sure to git pull --rebase origin dev and you have a clean working tree before continuing'):
-        BRANCH = local("git branch", capture=True)
-        BRANCH = BRANCH.split("\n")
-        for b in BRANCH:
-            if b.startswith("* "):
-                BRANCH = b[2:]
-                break
-        if BRANCH == "(no BRANCH)":
-            abort("You must be on a valid BRANCH to run the script.")
-        local('git stash')
-        local('git checkout dev; git merge %s;git push origin dev; git checkout %s' % (BRANCH, BRANCH))
-        local('git stash pop')
+# def quick_merge(force="n", verbose="f"):
+#     '''Runs git pull --rebase and merge with dev'''
+#     if confirm('Make sure to git pull --rebase origin dev and you have a clean working tree before continuing'):
+#         BRANCH = local("git branch", capture=True)
+#         BRANCH = BRANCH.split("\n")
+#         for b in BRANCH:
+#             if b.startswith("* "):
+#                 BRANCH = b[2:]
+#                 break
+#         if BRANCH == "(no BRANCH)":
+#             abort("You must be on a valid BRANCH to run the script.")
+#         local('git stash')
+#         local('git checkout dev; git merge %s;git push origin dev; git checkout %s' % (BRANCH, BRANCH))
+#         local('git stash pop')
 
 def restart():
     '''Restart app'''
-    run('touch %s' % (os.path.join(APPFOLDER, '%s-%s.ini' % (REPO, BRANCH))))
-    time.sleep(5)
-    update_tasks()
+    run("supervisorctl restart %s" % SUPERVISOR_APP)
 
 def update_dependencies():
     '''Update app dependencies from "dependencies.txt"'''
@@ -85,12 +84,12 @@ def pyshell():
     with cd(DJANGO_FOLDER):
         run('%s manage.py shell' % os.path.join(APP_VENV, 'bin/python'))
 
-def mongo():
-    '''Launches a mongo console on remote app'''
-    ## Magic command to make auto closing ssh tunnel
-    local('ssh -f -L 27042:localhost:27017 %s sleep 5' % env.hosts[0])
-    ## Connect to mongo through local mongo
-    local('mongo localhost:27042/%s-%s' % (REPO,BRANCH))
+#def mongo():
+#    '''Launches a mongo console on remote app'''
+#    ## Magic command to make auto closing ssh tunnel
+#    local('ssh -f -L 27042:localhost:27017 %s sleep 5' % env.hosts[0])
+#    ## Connect to mongo through local mongo
+#    local('mongo localhost:27042/%s-%s' % (REPO,BRANCH))
 
 def test_push():
     '''Push local copy of files without git commit or push'''
@@ -118,7 +117,6 @@ def deploy(force="n", verbose="f"):
         _clone_current_ref_to_remote()
         _create_venv()
         update_dependencies()
-        _add_celery()
         _start_app()
 
 def ls_logs():
@@ -127,20 +125,22 @@ def ls_logs():
             hide('warnings', 'running', 'stderr', 'stdout'),
             warn_only=True
             ):
-        ret = run("ls %s | sed -e 's/\.[a-xA-Z]*$//'" % os.path.join(APPFOLDER, 'log'))
+        ret = run("ls %s | sed -e 's/\.[a-xA-Z]*$//'" % os.path.join(APP_ROOT, 'log'))
         print ret
 
 def tail_log(logfile):
     '''Executes tail -f on given :logfile'''
-    run('tail -f %s' % os.path.join(APPFOLDER, 'log/%s.log' % logfile))
+    run('tail -f %s' % os.path.join(APP_ROOT, 'log/%s.log' % logfile))
 
-def update_tasks():
-    '''Update celery tasks on remote app'''
-    run('supervisorctl restart celery-%s-%s' % (REPO,BRANCH))
-
-
-    return True
-
+def add_ip():
+    '''Add my external ip address to nginx white list'''
+    #myip = local("wget -q -O - checkip.dyndns.org|sed -e 's/.*Current IP Address: //' -e 's/<.*$//'", capture=True)
+    myip = local("curl checkip.dyndns.org|sed -e 's/.*Current IP Address: //' -e 's/<.*$//'", capture=True)
+    username = getpass.getuser()
+    date = datetime.datetime.now().strftime("%d-%m-%Y at %H:%M")
+    hostname = socket.gethostname()
+    run("echo 'allow %s; # added by %s on %s for host %s' >> /etc/nginx/white_list/jibli" % (myip, username, date, hostname))
+    run("sudo /etc/init.d/nginx reload")
 
 ## PRIVATE FUNCTIONS
 
@@ -151,21 +151,21 @@ def _activate_deploy_mode():
 def _start_app():
     print 'Starting application'
     _activate_deploy_mode()
-    run('cp %s %s' % (WSGI_SUPERCONF, os.path.join(APPFOLDER, '%s-%s.ini' % (REPO,BRANCH))))
+    run("supervisorctl restart %s" % SUPERVISOR_APP)
 
 def _create_app_folder():
     print "Creating remote folders ..."
 
-    if exists(APPFOLDER) == True:
-        if confirm("Error: A project with the same name already exists in " + APPSFOLDER + ". Do you wish to erase it?"):
-            run("rm -rf "+ APPFOLDER)
+    if exists(APP_ROOT) == True:
+        if confirm("Error: The folder '%s' already exists. Do you wish to erase it?" % APP_ROOT):
+            run("rm -rf %s" % APP_ROOT)
         else:
             abort("Aborting...")
     for f in ["virt", "log", "run", "app"]:
         with settings(warn_only=True):
-            ret = run("mkdir -p " + APPFOLDER + "/" + f)
+            ret = run("mkdir -p " + APP_ROOT + "/" + f)
         if ret.failed:
-            abort("Error: Unable to create the folder " + APPFOLDER + "/" + f)
+            abort("Error: Unable to create the folder " + APP_ROOT + "/" + f)
 
 def _check_clean_git():
     print "Checking if data to commit..."
@@ -180,10 +180,10 @@ def _check_clean_git():
 
 def _clone_current_ref_to_remote():
     print "Cloning repo on the server..."
-    with cd('%s' % APPFOLDER):
+    with cd('%s' % APP_ROOT):
         ret = run('git clone %s %s' % (GITURL, 'app'))
         if ret.failed:
-            abort("Error: Unable to clone the REPOsitory.")
+            abort("Error: Unable to clone the Repository.")
     print "Checking out the BRANCH on the server..."
     with cd(DJANGO_FOLDER):
         with settings(warn_only=True):
@@ -193,35 +193,6 @@ def _clone_current_ref_to_remote():
 
 def _create_venv():
     print 'Creating virtual environments on project directory/virt and installing dependencies'
-    ret = run('virtualenv --distribute --no-site-packages %s' % APP_VENV)
+    ret = run('virtualenv %s' % APP_VENV)
     if ret.failed:
         abort('Error: unable to create virtualenv')
-
-def _add_celery():
-    '''Adds a celery async task pool daemon to the app'''
-    config = ConfigParser.SafeConfigParser()
-    section = 'program:celery-%s-%s' % (REPO, BRANCH)
-    config.add_section(section)
-    PATH = os.path.join(APPFOLDER, 'virt/bin')
-    options = {
-            'environment': 'PYTHONPATH=%s, DJANGO_SETTINGS_MODULE=settings, PATH=%s' %
-                            (DJANGO_FOLDER, PATH),
-            'command': 'python manage.py celeryd --loglevel DEBUG -c1',
-            'directory': CELERY_DIR,
-            'user': 'jibli',
-            'numprocs': '1',
-            'stdout_logfile': os.path.join(APPFOLDER, 'log/celery.log'),
-            'stderr_logfile': os.path.join(APPFOLDER, 'log/celery_error.log'),
-            'autostart': 'true',
-            'autorestart': 'true',
-            'startsecs': '10'
-            }
-
-    for k, v in options.iteritems():
-        config.set(section, k, v)
-
-    with open(CELERY_CONF_FILE, 'wb') as celeryfile:
-        config.write(celeryfile)
-    put(CELERY_CONF_FILE, DJANGO_FOLDER)
-    local('rm %s' % CELERY_CONF_FILE)
-    run('supervisorctl update')
