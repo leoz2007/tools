@@ -1,7 +1,7 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>Timeline Facebook</title>
+    <title>Cover Facebook</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Script for make timeline on Facebook">
     <meta name="author" content="Leoz - ThinkIT">
@@ -27,16 +27,16 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </a>
-          <a class="brand" href="#">Timeline Facebook</a>
+          <a class="brand" href="#">Cover Facebook</a>
         </div>
       </div>
     </div>
 
     <div class="container">
       <div class="row">
-        <input class="input departure" type="text" name="departure" placeholder="Departure"/>
-        <input class="input arrival" type="text" name="arrival" placeholder="Arrival"/>
-        <button>add</button>
+        <input class="input-xlarge departure" type="text" name="departure" placeholder="Departure" style="height: 30px;"/>
+        <input class="input-xlarge arrival" type="text" name="arrival" placeholder="Arrival" style="height: 30px;"/>
+        <button class="btn btn-info">Ajouter un trajet</button>
 
         <div id="result"></div>
 
@@ -47,6 +47,7 @@
               <th>Ville d'arrive</th>
               <th>Distance</th>
               <th>Screenshot</th>
+              <th>Delete</th>
             </tr>
           </thead>
           <tbody class="result">
