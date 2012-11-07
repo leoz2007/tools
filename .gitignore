@@ -1,0 +1,13 @@
+*.swp
+*.pyc
+*~
+db
+log/*
+static/*
+static/*/*
+*~
+.ropeproject/*
+\#*#
+.#*
+.DS_Store
+*.db

@@ -32,12 +32,12 @@ ADMINS = (
 )
 
 MANAGERS = ADMINS
-DB_PATH = os.path.join(PROJECT_ROOT,'db')
 
+DB_PATH = os.path.join(PROJECT_ROOT,'db/sqlite.db')
 DATABASES = {
     'default': {
-        'ENGINE' : 'django_mongodb_engine',
-        'NAME' : PROJECT_DOMAIN,
+        'ENGINE' : 'django.db.backends.sqlite3',
+        'NAME' : DB_PATH,
         'USER': '',                      # Not used with sqlite3.
         'PASSWORD': '',                  # Not used with sqlite3.
         'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
@@ -134,8 +134,6 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-## Add user_id cookie if user is authenticated (needed for websockets)
-    'website.middleware.cookies.CookiePostHandlerMiddleware',
  )
 
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
@@ -160,8 +158,7 @@ INSTALLED_APPS = [ 'django.contrib.auth',
     'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
-    'django.contrib.humanize',
-    'django_mongodb_engine',
+    #'django.contrib.humanize',
  ]
 
 AUTHENTICATION_BACKENDS = (
@@ -255,11 +252,11 @@ FACEBOOK_NAMESPACE='jibliapp'
 
 
 ## CELERY WORKER CONFIG
-if DEPLOY_MODE:
-    BROKER_URL = 'mongodb://localhost:27017/celery-%s' % PROJECT_DOMAIN
-    INSTALLED_APPS += ('djcelery',)
-    import djcelery
-    djcelery.setup_loader()
+#if DEPLOY_MODE:
+#    BROKER_URL = 'mongodb://localhost:27017/celery-%s' % PROJECT_DOMAIN
+#    INSTALLED_APPS += ('djcelery',)
+#    import djcelery
+#    djcelery.setup_loader()
 
 # Used to determine how many more results are shown on the client using the pagination
 LIMIT_PAGINATION = 30
@@ -269,34 +266,16 @@ LIMIT_NEWSFEED_INIT = 5
 
 ## ZMQ CONTEXT MUST BE UNIQUE AND CLEANLY SHUT DOWN
 
-if not DEPLOY_MODE:
-    import zmq
-    import atexit
+#if not DEPLOY_MODE:
+#    import zmq
+#    import atexit
 
-    def clean_context(context):
-        context.term()
+#    def clean_context(context):
+#        context.term()
 
-    context = zmq.Context()
-    ZMQ_CONTEXT = context
-    atexit.register(clean_context, context)
-
-# Amazon s3 settings (used for data uploads)
-import boto
-DEV_UPLOAD_DOMAIN = 'https://jibli.s3.amazonaws.com'
-DEV_UPLOAD_ORIG_IMG_FOLDER = '/images/dev/original/'                  # folder for original announces photos 
-DEV_UPLOAD_THUMB_IMG_FOLDER = '/images/dev/thumbnails/'               # folder for announces thumbnails
-DEV_UPLOAD_LARGE_THUMB_IMG_FOLDER = '/images/dev/large_thumbnails/'   # folder for announces large thumbnails
-
-PROD_UPLOAD_DOMAIN = 'https://jibli.s3.amazonaws.com'
-PROD_UPLOAD_ORIG_IMG_FOLDER = '/images/prod/original/'                # folder for original announces photos 
-PROD_UPLOAD_THUMB_IMG_FOLDER = '/images/prod/thumbnails/'             # folder for announces thumbnails
-PROD_UPLOAD_LARGE_THUMB_IMG_FOLDER = '/images/dev/large_thumbnails/'  # folder for announces large thumbnails
-
-S3_ACCESS_KEY_ID = 'AKIAIUQL6PPVWGNTATYQ'
-S3_SECRET = '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'
-S3_HANDLE = boto.connect_s3(S3_ACCESS_KEY_ID, S3_SECRET)
-
-
+#    context = zmq.Context()
+#    ZMQ_CONTEXT = context
+#    atexit.register(clean_context, context)
 
 ### Seentry configuration
 SENTRY_DSN= 'http://552e18b8598641eeacb6e2dac9c05b86:21e56e7d4fd34312ba7bf83ee6f391a1@sentry.tkit.me/1'
