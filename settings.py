@@ -37,7 +37,7 @@ DB_PATH = os.path.join(PROJECT_ROOT,'db/sqlite.db')
 DATABASES = {
     'default': {
         'ENGINE' : 'django.db.backends.sqlite3',
-        'NAME' : 'DB_PATH',
+        'NAME' : DB_PATH,
         'USER': '',                      # Not used with sqlite3.
         'PASSWORD': '',                  # Not used with sqlite3.
         'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
@@ -134,8 +134,6 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-## Add user_id cookie if user is authenticated (needed for websockets)
-    'website.middleware.cookies.CookiePostHandlerMiddleware',
  )
 
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
@@ -160,7 +158,7 @@ INSTALLED_APPS = [ 'django.contrib.auth',
     'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
-    'django.contrib.humanize',
+    #'django.contrib.humanize',
  ]
 
 AUTHENTICATION_BACKENDS = (
