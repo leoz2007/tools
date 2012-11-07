@@ -12,6 +12,8 @@ admin.autodiscover()
 urlpatterns = patterns('',
         url(r'^s/(?P<path>.*)$', 'django.views.static.serve', 
              { 'document_root': settings.STATIC_ROOT, }),
+        
+        url(r'^$', views.get_home, name='home'),
         url(r'^home/$', views.get_home, name='home'),
         url(r'^revolution/$', views.get_revolution, name='revolution'),
         url(r'^timeline/$', views.get_image, name='timeline'),
